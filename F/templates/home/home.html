@@ -1,0 +1,66 @@
+{% extends 'home/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+<p style="color: #fff;">Welcome back, {{ username }}!</p>
+
+<div class="dashboard" style="background-color: rgb(43, 42, 42);">
+    <h3>Student Dashboard</h3>
+    <ul>
+        <li><a href="{{ url_for('study_plan') }}" >Study Plan</a></li>
+        <li><a href="{{ url_for('student_performance') }}">Student Performance Analysis</a></li>
+        <li><a href="{{ url_for('resume_analysis') }}">Resume Analysis</a></li>
+        <li><a href="{{ url_for('resume_match') }}">Resume Match</a></li>
+        <li><a href="{{ url_for('discussion_forum') }}">Discussion Forum</a></li>
+
+
+    </ul>
+</div>
+
+<style>
+    .container {
+        max-width: 900px; /* Set maximum width */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px; /* Add padding around the container */
+        border: 1px solid rgb(43, 42, 42); /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        background-color: rgb(63, 63, 63); /* Add a background color */
+    }
+
+    .dashboard {
+        background-color: rgb(43, 42, 42); /* Add a background color */
+        padding: 20px; /* Add padding */
+        border: 1px solid rgb(43, 42, 42); /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+    }
+
+    .dashboard h3 {
+        margin-top: 0; /* Remove top margin for the heading */
+        color: #fff; /*
+    }
+
+    .dashboard ul {
+        list-style-type: none; /* Remove bullet points */
+        padding: 0; /* Remove default padding */
+    }
+
+    .dashboard ul li {
+        margin-bottom: 10px; /* Add spacing between list items */
+    }
+
+    .dashboard ul li a {
+        text-decoration: none; /* Remove underline from links */
+        color: #fff1f1; /* Set link color */
+        display: block; /* Make links block-level elements */
+        padding: 10px; /* Add padding */
+        border: 1px solid #ccc; /* Add a border */
+        border-radius: 5px; /* Add rounded corners */
+        transition: background-color 0.3s; /* Add smooth transition */
+    }
+
+    .dashboard ul li a:hover {
+        background-color: #886f7e; /* Change background color on hover */
+    }
+</style>
+{% endblock %}

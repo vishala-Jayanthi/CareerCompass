@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a1a, #333333); /* Gradient background */
+            color: #fff;
+            line-height: 1.6;
+            animation: backgroundMotion 20s ease infinite alternate; /* Motion background animation */
+        }
+        
+        @keyframes backgroundMotion {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: rgba(52, 51, 51, 0.8); /* Darker container background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            border: 1px solid #474646;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.6); /* Darker message background */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        
+        .message p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        .message:hover {
+            background-color: rgba(101, 97, 97, 0.8); /* Darker background on hover */
+        }
+        
+        .reply {
+            margin-left: 40px;
+            padding-left: 20px;
+            border-left: 3px solid #666;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #666;
+            border-radius: 8px;
+            resize: none;
+            margin-bottom: 20px;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker textarea background */
+            color: #fff;
+        }
+        
+        input[type="text"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #666;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker input background */
+            color: #fff;
+        }
+        
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        
+            .message {
+                padding: 15px;
+                font-size: 16px;
+            }
+        
+            input[type="text"],
+            textarea,
+            input[type="submit"] {
+                padding: 10px;
+            }
+        }
+        
+        
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        
+            .message {
+                padding: 15px; /* Increased padding for better spacing */
+                font-size: 16px; /* Slightly larger font size for better readability */
+            }
+        
+            input[type="text"],
+            textarea,
+            input[type="submit"] {
+                padding: 10px; /* Adjusted padding for smaller screens */
+            }
+        }
+        /* Animation for message hover effect */
+        @keyframes messageHover {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Style for message hover animation */
+        .message:hover {
+            animation: messageHover 0.3s ease;
+        }
+
+        /* Animation for reply button */
+        @keyframes buttonHover {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Style for reply button */
+        .reply-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Animation for message deletion */
+        @keyframes messageDelete {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        /* Style for message deletion animation */
+        .message.deleted {
+            animation: messageDelete 0.5s ease forwards;
+        }
+
+        /* Animation for message editing */
+        @keyframes messageEdit {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Style for message editing animation */
+        .message.editing {
+            animation: messageEdit 0.5s ease forwards;
+        }
+
+        /* Animation for form submission */
+        @keyframes formSubmission {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Style for form submission animation */
+        form.submitting {
+            animation: formSubmission 0.5s ease forwards;
+        }
+
+        /* Animation for reply submission */
+        @keyframes replySubmission {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style for reply submission animation */
+        .reply.submitted {
+            animation: replySubmission 0.5s ease forwards;
+        }
+
+        /* Animation for message hover effect */
+        @keyframes messageHover {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Style for message hover animation */
+        .message:hover {
+            animation: messageHover 0.3s ease;
+        }
+
+        /* Animation for reply button */
+        @keyframes buttonHover {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Style for reply button */
+        .reply-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Style for reply button hover animation */
+        .reply-btn:hover {
+            animation: buttonHover 0.3s ease;
+        }
+
+        /* Animation for form */
+        @keyframes formFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style for form animation */
+        form {
+            animation: formFadeIn 0.5s ease forwards;
+        }
+
+        /* Animation for message entry */
+        @keyframes messageEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style for message entry animation */
+        .message {
+            animation: messageEntry 0.5s ease forwards;
+        }
+
+        /* Animation for reply form */
+        @keyframes replyFormFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Style for reply form animation */
+        .reply-form {
+            animation: replyFormFadeIn 0.4s ease forwards;
+        }
+        .cool-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            animation: coolBackground 45s linear infinite alternate;
+            background: linear-gradient(-45deg, #ff6699, #6666ff, #99ff66, #ffff66);
+            background-size: 400% 400%;
+        }
+
+        @keyframes coolBackground {
+            0% {
+                background: linear-gradient(-45deg, #ff6699, #6666ff, #99ff66, #ffff66);
+                background-size: 400% 400%;
+                background-position: 0 50%;
+            }
+            25% {
+                background-position: 100% 50%;
+            }
+            50% {
+                background-position: 0 50%;
+            }
+            75% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100% 0;
+            }
+        }            
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="modal">
+        <h1>Discussion Forum</h1>
+        <h2>Post a Message</h2>
+        <form action="{{ url_for('discussion_forum')}}" method="post">
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="4" required></textarea><br>
+            <input type="hidden" id="reply_to" name="reply_to" value="">
+            <input type="submit" value="Submit">
+        </form>
+
+     
+        <div id="messages">
+            {% for message in messages %}
+            <div class="message" oncontextmenu="handleRightClick(this, {{ message[0] }}); return false;">
+                <p><strong>{{ message[1] }}</strong> - {{ message[2] }}</p>
+                {% if message[3] is not none %}
+                    <div class="reply">
+                        <p><em>In reply to:</em></p>
+                        {% for m in messages %}
+                            {% if m[0] == message[3] %}
+                                <p><strong>{{ m[1] }}</strong> - {{ m[2] }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+                    
+    <script>
+        function handleRightClick(element, messageId) {
+            var replyToInput = document.getElementById("reply_to");
+            replyToInput.value = messageId; 
+            var inputField = document.createElement('input');
+            inputField.type = 'text';
+            inputField.id = 'replyInput';
+            inputField.placeholder = 'Enter your message here...';
+        
+            var submitButton = document.createElement('input');
+            submitButton.type = 'submit';
+            submitButton.value = 'Submit';
+        
+            element.appendChild(inputField);
+            element.appendChild(submitButton);
+        
+            submitButton.addEventListener('click', function(event) {
+                event.preventDefault(); 
+                var userMessage = inputField.value;
+                if (userMessage) {
+                    var messageInput = document.getElementById("message");
+                    messageInput.value = userMessage;
+                    messageInput.form.submit();
+                    element.removeChild(inputField);
+                    element.removeChild(submitButton);
+                }
+            });
+        }
+        document.addEventListener('mousemove', function(e) {
+            const mouseX = e.clientX / window.innerWidth * 100;
+            const mouseY = e.clientY / window.innerHeight * 100;
+            const background = document.querySelector('.cool-background');
+            background.style.backgroundPositionX = mouseX + '%';
+            background.style.backgroundPositionY = mouseY + '%';
+        });
+    </script>
+</body>
+</html>
+

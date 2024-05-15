@@ -1,0 +1,50 @@
+{% extends 'home/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    <div class="dashboard">
+        <h2 class="mb-4" style="color: #fff;">Resume Category Prediction 📄</h2>
+        <form action="/resume_analysis" method="post" enctype="multipart/form-data" class="mb-4">
+            <div class="form-group">
+                <label for="file" style="color: #fff;">Upload Resume</label>
+                <input type="file" name="file" accept=".pdf" class="form-control dark-mode">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary dark-mode">Upload</button>
+        </form>
+    
+        {% if predicted_category %}
+        <div>
+            <h3 style="color: #fff;">Result:</h3>
+            <p style="color: #fff;">The predicted category for the uploaded resume is: <b>{{ predicted_category }}</b></p>
+        </div>
+        {% endif %}
+    </div>
+
+<style>
+    .container {
+        max-width: 900px; /* Set maximum width */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px; /* Add padding around the container */
+        border: 1px solid rgb(43, 42, 42); /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        background-color: rgb(63, 63, 63); /* Add a background color */
+    }
+
+    .dashboard {
+        background-color: rgb(43, 42, 42); /* Add a background color */
+        padding: 20px; /* Add padding */
+        border: 1px solid #302f2f; /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        margin-top: 20px; /* Add some space between elements */
+    }
+
+    /* Dark mode styles */
+    .dark-mode {
+        background-color: #2b2b2b !important; /* Set background color */
+        color: #fff !important; /* Set text color */
+        border: 1px solid #555 !important; /* Set border color */
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'home/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+<script>
+    // JavaScript function to format text
+    function formatText() {
+        var resultParagraph = document.getElementById('resultText');
+        if (resultParagraph) {
+            var text = resultParagraph.innerHTML;
+            // Replace *text* with <strong>text</strong>
+            text = text.replace(/\\(.?)\\*/g, '<strong>$1</strong>');
+            // Replace text with <em>text</em>
+            text = text.replace(/\(.?)\*/g, '<em>$1</em>');
+            resultParagraph.innerHTML = text;
+        }
+    }
+
+    // Call the function when the page loads
+    window.onload = formatText;
+</script>
+<div class="dashboard">
+    <h1 class="mb-4" style="color: #fff;">Generate Study Plan 📚</h1>
+    <form method="post" action="{{ url_for('study_plan')}}" class="mb-4">
+        <div class="form-group">
+            <label for="area_of_interest" style="color: #fff;">Area of Interest</label><br>
+            <input type="text" id="area_of_interest" name="area_of_interest" class="form-control dark-mode" >
+        </div>
+
+        <div class="form-group">
+            <label for="course" style="color: #fff;">Choose the course</label>
+            <select id="course" name="course" class="form-control dark-mode">
+                <option value="CSE" style="color: #272727;">Computer Science and Engineering</option>
+                <option value="ECE" style="color: #272727;">Electronics and Communication Engineering</option>
+                <option value="MECH" style="color: #272727;">Mechanical Engineering</option>
+                <option value="CIVIL" style="color: #272727;">Civil Engineering</option>
+                <option value="EEE" style="color: #272727;">Electrical and Electronics Engineering</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="programme" style="color: #fff;">Programme</label>
+            <input type="text" id="programme" name="programme" class="form-control dark-mode">
+        </div>
+
+        <div class="form-group">
+            <label for="days" style="color: #fff;">Study Days</label>
+            <input type="text" id="days" name="days" class="form-control dark-mode">
+        </div>
+
+        <div class="form-group">
+            <label for="time" style="color: #fff;">Study Time</label>
+            <input type="text" id="time" name="time" class="form-control dark-mode">
+        </div>
+        <br>
+
+        <button type="submit" class="btn btn-primary dark-mode">Generate</button>
+    </form>
+    <div>
+        {% if result %}
+        <h3 style = "color: #fff;">Generated Study Plan:</h3>
+        <p id="studyplan" style="color: #fff;">{{ result }}</p>
+        <ul id="formattedPlan"></ul>
+        {% endif %}
+    </div>      
+</div>
+<script>
+// Assuming your paragraph is in a variable named 'p'
+var p = document.querySelector('p').innerText;
+
+// Split the text into lines
+var lines = p.split('* ');
+
+// Process each line
+for (var i = 0; i < lines.length; i++) {
+    // Remove leading and trailing spaces
+    lines[i] = lines[i].trim();
+
+    // If the line starts with an asterisk, make it bold and add a bullet point
+    if (lines[i].startsWith('**')) {
+        lines[i] = '<b>' + lines[i].substring().trim() + '</b>';
+    } else if (lines[i].length > 0) {
+        lines[i] = '• ' +'<b>'+ lines[i]+'</b>';
+    }
+}
+
+// Join the lines back together and replace the content of the <p> tag
+document.querySelector('p').innerHTML = lines.join('<br>');
+    </script>
+    
+
+<style>
+    .container {
+        max-width: 900px; /* Set maximum width */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px; /* Add padding around the container */
+        border: 1px solid rgb(43, 42, 42); /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        background-color: rgb(63, 63, 63); /* Add a background color */
+    }
+
+    .dashboard {
+        background-color: rgb(43, 42, 42); /* Add a background color */
+        padding: 20px; /* Add padding */
+        border: 1px solid #302f2f; /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        margin-top: 20px; /* Add some space between elements */
+    }
+
+    /* Dark mode styles */
+    .dark-mode {
+        background-color: #2b2b2b !important; /* Set background color */
+        color: #fff !important; /* Set text color */
+        border: 1px solid #555 !important; /* Set border color */
+    }
+</style>
+{% endblock %}

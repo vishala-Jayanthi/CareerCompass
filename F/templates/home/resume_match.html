@@ -1,0 +1,56 @@
+{% extends 'home/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    <div class="dashboard">
+        <h2 class="mb-4" style="color: #fff;">Resume Improvement Suggestions 📄</h2>
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+            <div class="form-group">
+                <label for="job_description" style="color: #fff;">Job Description</label><br>
+                <textarea id="job_description" name="job_description" rows="4" cols="50" required class="form-control dark-mode"></textarea><br>
+            </div>
+            <div class="form-group">
+                <label for="resume" style="color: #fff;">Upload Resume</label><br>
+                <input type="file" id="resume" name="resume" required class="form-control dark-mode"><br>
+            </div>
+            <button type="submit" class="btn btn-primary dark-mode">Submit</button>
+        </form>
+        {% if response %}
+            <div class="result">
+                <h2 style="color: #fff;">Result:</h2>
+                <p style="color: #fff;">{{ response }}</p>
+            </div>
+            
+        {% endif %}
+        {% if message %}
+            <p style="color: #fff;">{{ message }}</p>
+        {% endif %}
+    </div>
+
+<style>
+    .container {
+        max-width: 900px; /* Set maximum width */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px; /* Add padding around the container */
+        border: 1px solid rgb(43, 42, 42); /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        background-color: rgb(63, 63, 63); /* Add a background color */
+    }
+
+    .dashboard {
+        background-color: rgb(43, 42, 42); /* Add a background color */
+        padding: 20px; /* Add padding */
+        border: 1px solid #302f2f; /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        margin-top: 20px; /* Add some space between elements */
+    }
+
+    /* Dark mode styles */
+    .dark-mode {
+        background-color: #2b2b2b !important; /* Set background color */
+        color: #fff !important; /* Set text color */
+        border: 1px solid #555 !important; /* Set border color */
+    }
+</style>
+{% endblock %}

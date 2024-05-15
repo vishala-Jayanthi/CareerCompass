@@ -1,0 +1,79 @@
+{% extends 'home/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<h3 style="color: #fff; text-align: center;">Performance Data</h3>
+<div class="container mt-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Created At</th>
+                <th>Hours Studied</th>
+                <th>Previous Scores</th>
+                <th>Extracurricular Activities</th>
+                <th>Sleep Hours</th>
+                <th>Sample Question Papers Practiced</th>
+                <th>Performance Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in student_performance %}
+            <tr>
+                <td>{{ data.created_at }}</td>
+                <td>{{ data.hours_studied }}</td>
+                <td>{{ data.previous_scores }}</td>
+                <td>{{ data.extracurricular_activities }}</td>
+                <td>{{ data.sleep_hours }}</td>
+                <td>{{ data.sample_question_papers_practiced }}</td>
+                <td>{{ data.performance_category }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+.container {
+        max-width: 900px; /* Set maximum width */
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px; /* Add padding around the container */
+        border: 1px solid rgb(43, 42, 42); /* Add a border */
+        border-radius: 8px; /* Add rounded corners */
+        background-color: rgb(63, 63, 63); /* Add a background color */
+    }
+    h1, h2 {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    tbody {
+        color: #fff;
+    }
+
+    th, td {
+        border: 1px solid rgb(128, 124, 124);
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: rgb(63, 63, 63);
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgb(63, 63, 63);
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+</style>
+
+{% endblock %}

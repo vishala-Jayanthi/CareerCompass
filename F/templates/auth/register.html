@@ -1,0 +1,53 @@
+{% extends 'auth/auth_layout.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block content%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <div class="video-wrap">
+            <video autoplay muted loop id="video-bg">
+                <source src="../static/video/v1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <!-- Your existing registration content -->
+    <div class="register">
+        {% include "includes/alert.html" %}
+        <h1>Register</h1>
+        <div class="links">
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}" class="active">Register</a>
+        </div>
+        <form action="{{ url_for('register') }}" method="post" autocomplete="off">
+            <label for="username">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="username" placeholder="Username" id="username" required>
+            <label for="password">
+                <i class="fas fa-lock"></i>
+            </label>
+            <input type="password" name="password" placeholder="Password" id="password" required>
+            <label for="email">
+                <i class="fas fa-envelope"></i>
+            </label>
+            <input type="email" name="email" placeholder="Email" id="email" required>
+            <div class="msg">{{ msg }}</div>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+
+</body>
+</html>
+
+{% endblock %}
